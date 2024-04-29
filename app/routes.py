@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import render_template,url_for,redirect, flash,request
-from app import app,db
+from app import app
 from app.tables import Raions,Group_Home,Summary
 
 from datetime import datetime

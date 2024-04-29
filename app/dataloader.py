@@ -9,6 +9,7 @@ import math
 
 def load_database(db, app):
     with app.app_context():
+
         exSession = sessionmaker(bind=db.engine)
         session = exSession()
         groups_zhilya = []
