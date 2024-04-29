@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=9f8b27f7-c36c-4f45-8f30-17b7b837174b" type="text/javascript"></script>
+<script src="https://yastatic.net/s3/mapsapi-jslibs/heatmap/0.0.1/heatmap.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div id="map" style="width: 700px; height: 400px"></div>
+    <div id="gradient-scale"></div>
+    <div class="segment-label"></div>
+
+
+
+<!--<script src="{{ url_for('static', filename='js/test.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/style.js') }}"></script>
+<script src="{{ url_for('static', filename='js/info.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_version.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_test.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='js/heatmapWorker.js') }}"></script>
+
+
+
+<script src="{{ url_for('static', filename='js/new_version.js') }}"></script>
+
+-->
+<script src="{{ url_for('static', filename='js/medisine_json.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_test_json.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/version_test.js') }}"></script>
+
+
+
+</body>
+</html>
