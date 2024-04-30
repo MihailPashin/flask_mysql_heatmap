@@ -6,7 +6,7 @@ import mysql.connector
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Поменяем, если перейдём на другую БД 
-engine = create_engine("mysql+mysqlconnector://admin:seizures@0.0.0.0:8080/kostroma_heatmap",
+engine = create_engine("mysql+mysqlconnector://admin:seizures@localhost/kostroma_heatmap",
     connect_args = {
         "port": 3306
     })

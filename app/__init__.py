@@ -14,8 +14,9 @@ app.config.from_object(Config)
 
 def init_db():
 
-    db=Base.metadata.create_all(bind=engine,checkfirst=True)
+    Base.metadata.create_all(bind=engine,checkfirst=True)
     print("Initialized the db")
+    db=SQLAlchemy(app)
 
     with engine.connect() as conn:
         result = conn.execute(text('select True from summary limit 1'))
@@ -26,7 +27,7 @@ def init_db():
     else:
    
         print('Adding_Data')    
-        load_database(db,app)
+        load_database(engine,app)
         print('Data has been added')
 
 
