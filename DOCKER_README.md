@@ -34,8 +34,8 @@ Is data that already created will gone? No, since in the Docker Compose file you
 
 ## MySQL credential
 
-- Username: root
-- Password: rootpassword
+- Username: admin
+- Password: seizures
 
 ## How to connect to MySQL
 
