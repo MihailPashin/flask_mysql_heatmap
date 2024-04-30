@@ -5,16 +5,30 @@ ymaps.ready(['Heatmap']).then(function init() {
     }, {
         restrictMapArea: [[57.643834, 40.531073],[57.942011, 41.241367]]
     });
+/*
+var fullscreenControl = myMap.controls.get('fullscreenControl');
 
-
+    // Удаляем элемент управления с карты
+    myMap.controls.remove(fullscreenControl);
+*/
     var heatMapData = []; // Массив для хранения данных тепловых точек
     var heatMapObjects = []; // Массив для хранения объектов тепловых точек
-
+    var colors = [
+    'rgba(0, 255, 0, 1)',        // Чистый зелёный
+    'rgba(25, 230, 0, 1)',       // Зелёный с небольшим оттенком жёлтого
+    'rgba(51, 204, 0, 1)',       // Зелёно-жёлтый
+    'rgba(76, 179, 0, 1)',       // Тёмный зелёно-жёлто-зелёный
+    'rgba(102, 153, 0, 1)',      // Тёмный зелёно-жёлтый
+    'rgba(128, 128, 0, 1)',      // Тёмный жёлто-коричневый
+    'rgba(153, 102, 0, 1)',      // Красно-жёлтый
+    'rgba(179, 76, 0, 1)',       // Красно-коричневый
+    'rgba(190, 78, 36, 1)',      // Темный красно-оранжевый
+    'rgba(237, 118, 14, 1)',     // Красный с небольшим оттенком оранжевого
+    'rgba(255, 0, 0, 1)'         // Чистый красный
+];
     // Функция для добавления тепловых точек
     function addHeatmap(group) {
         removeHeatmap(); // Удаляем все текущие тепловые точки
-
-
         var data;
             if (group === 'Парковка') {
                 data = json; // Используем данные для группы "Парковка"
@@ -30,57 +44,53 @@ ymaps.ready(['Heatmap']).then(function init() {
             heatMapData.push(coordinates.concat(weight));
         }
 
-        var colors = [
-            'rgba(1, 50, 32, 1)',        // Темно-зеленый
-            'rgba(0, 128, 0, 1)',        // Зеленый
-            'rgba(173, 255, 47, 1)',     // Желто-зеленый
-            'rgba(255, 255, 0, 1)',      // Желтый
-            'rgba(237, 118, 14, 1)',     // Оранжево-желтый
-            'rgba(255, 165, 0, 1)',      // Оранжевый
-            'rgba(190, 78, 36, 1)',      // Красно-оранжевый
-            'rgba(255, 0, 0, 1)',        // Красный
-            'rgba(200, 0, 0, 1)'         // Темно-красный
-        ];
-
         for (var j = 0; j < heatMapData.length; j++) {
             var heatmapGradient;
             var weight = heatMapData[j][2];
 
-            if (weight >= 9) {
+            if (weight >= 10) {
                 heatmapGradient = {
                     0.1: colors[0]
                 };
-            } else if (weight >= 8) {
+            } else if (weight >= 9) {
                 heatmapGradient = {
                     0.1: colors[1]
                 };
-            } else if (weight >= 7) {
+            } else if (weight >= 8) {
                 heatmapGradient = {
                     0.1: colors[2]
                 };
-            } else if (weight >= 6) {
+            } else if (weight >= 7) {
                 heatmapGradient = {
                     0.1: colors[3]
                 };
-            } else if (weight >= 5) {
+            } else if (weight >= 6) {
                 heatmapGradient = {
                     0.1: colors[4]
                 };
-            } else if (weight >= 4) {
+            } else if (weight >= 5) {
                 heatmapGradient = {
                     0.1: colors[5]
                 };
-            } else if (weight >= 3) {
+            } else if (weight >= 4) {
                 heatmapGradient = {
                     0.1: colors[6]
                 };
-            } else if (weight >= 2) {
+            } else if (weight >= 3) {
                 heatmapGradient = {
                     0.1: colors[7]
                 };
-            } else {
+            }else if (weight >= 2) {
                 heatmapGradient = {
                     0.1: colors[8]
+                };
+            }else if (weight >= 1) {
+                heatmapGradient = {
+                    0.1: colors[9]
+                };
+            } else {
+                heatmapGradient = {
+                    0.1: colors[10]
                 };
             }
 
@@ -98,10 +108,6 @@ ymaps.ready(['Heatmap']).then(function init() {
             heatMapObjects.push(heatmap);
         }
     }
-
-
-
-
 
 function removeHeatmap() {
         for (var i = 0; i < heatMapObjects.length; i++) {
@@ -179,7 +185,6 @@ function handleHeatmapClick(e, group) {
                     break;
                 }
             }
-
             // Определение конечного названия в зависимости от выбранной группы и наличия совпадений
             if (group === 'Парковка' && titleFromParkovka) {
                 title = titleFromParkovka;
@@ -245,10 +250,6 @@ myMap.options.set('fullscreenZIndex', 1);
 
 
 
-
-
-
-
 /*
  myMap.events.add('click', function (e) {
     var activeItems = listBoxWithCheckbox.state.get('activeItems');
@@ -258,8 +259,6 @@ myMap.options.set('fullscreenZIndex', 1);
     } else {
     }
 });*/
-
-
 
 
 // Создаем кнопку
@@ -273,36 +272,39 @@ myMap.options.set('fullscreenZIndex', 1);
 
 
 function countHeatmapPoints() {
-    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // Инициализируем массив для подсчета количества точек каждого цвета
+    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0]; // Инициализируем массив для подсчета количества точек каждого цвета
     var totalPoints = heatMapData.length; // Общее количество точек
 
     // Проходим по всем точкам на карте и увеличиваем счетчик для соответствующего цвета
     for (var j = 0; j < totalPoints; j++) {
         var weight = heatMapData[j][2];
-        if (weight >= 9) {
+        if (weight >= 10) {
             counts[0]++;
-        } else if (weight >= 8) {
+        } else if (weight >= 9) {
             counts[1]++;
-        } else if (weight >= 7) {
+        } else if (weight >= 8) {
             counts[2]++;
-        } else if (weight >= 6) {
+        } else if (weight >= 7) {
             counts[3]++;
-        } else if (weight >= 5) {
+        } else if (weight >= 6) {
             counts[4]++;
-        } else if (weight >= 4) {
+        } else if (weight >= 5) {
             counts[5]++;
-        } else if (weight >= 3) {
+        } else if (weight >= 4) {
             counts[6]++;
-        } else if (weight >= 2) {
+        } else if (weight >= 3) {
             counts[7]++;
-        } else {
+        } else if (weight >= 2) {
             counts[8]++;
+        } else if (weight >= 1) {
+            counts[9]++;
+        }   else {
+            counts[10]++;
         }
     }
 
     return { counts: counts, totalPoints: totalPoints };
 }
-
 
 
 // Обработчик события для кнопки "Диаграмма"
@@ -354,32 +356,12 @@ function drawChart(canvas) {
     canvas.chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['9', '8', '7', '6', '5', '4', '3', '2', '1'], // Веса точек
+            labels: ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1','0'], // Веса точек
             datasets: [{
                 label: 'Количество всего', // Убрал отображение числа в подписи
                 data: counts, // Количество точек каждого цвета
-                backgroundColor: [
-                    'rgba(1, 50, 32, 1)',
-                    'rgba(0, 128, 0, 1)',
-                    'rgba(173, 255, 47, 1)',
-                    'rgba(255, 255, 0, 1)',
-                    'rgba(237, 118, 14, 1)',
-                    'rgba(255, 165, 0, 1)',
-                    'rgba(190, 78, 36, 1)',
-                    'rgba(255, 0, 0, 1)',
-                    'rgba(200, 0, 0, 1)',
-                ],
-                borderColor: [
-                    'rgba(1, 50, 32, 1)',
-                    'rgba(0, 128, 0, 1)',
-                    'rgba(173, 255, 47, 1)',
-                    'rgba(255, 255, 0, 1)',
-                    'rgba(237, 118, 14, 1)',
-                    'rgba(255, 165, 0, 1)',
-                    'rgba(190, 78, 36, 1)',
-                    'rgba(255, 0, 0, 1)',
-                    'rgba(200, 0, 0, 1)',
-                ],
+                backgroundColor: [colors[0], colors[1], colors[2], colors[3],colors[4], colors[5], colors[6], colors[7],colors[8], colors[9], colors[10]],
+                borderColor: [colors[0], colors[1], colors[2], colors[3],colors[4], colors[5], colors[6], colors[7],colors[8], colors[9], colors[10]],
                 borderWidth: 1
             }]
         },
@@ -395,7 +377,7 @@ function drawChart(canvas) {
                 x: {
                     title: {
                         display: true,
-                        text: 'Веса'
+                        text: 'Степень привлекательности'
                     }
                 }
             },
@@ -427,9 +409,6 @@ function drawChart(canvas) {
         }
     });
 }
-
-
-
 
 
 
