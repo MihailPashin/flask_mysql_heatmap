@@ -9,9 +9,11 @@ import math
 
 def load_database(db, app):
     with app.app_context():
+        print('load_database')
+        Session = sessionmaker()
+        Session.configure(bind=db.engine)
+        session = Session()
 
-        exSession = sessionmaker(bind=db.engine)
-        session = exSession()
         groups_zhilya = []
         metadata = MetaData()
         metadata.reflect(bind=db.engine)
@@ -41,7 +43,7 @@ def load_database(db, app):
                 stmt = metadata.tables['objects_estate'].insert().values( id = v['object_id'], \
                 name = v['title'],coord_x = v['coord_X'] ,coord_y = v['coord_Y'])
                 db.session.execute(stmt)
-                db.session.commit()
+                session.commit()
    
             with open('app/storage/final_result.json', 'r') as f:
                 summary = json.load(f);
@@ -59,6 +61,6 @@ def load_database(db, app):
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            session.rollback()
+            db.session.rollback()
         finally:
-            session.close()
+            db.session.close()

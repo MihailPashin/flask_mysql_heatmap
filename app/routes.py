@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-
-from flask import render_template,url_for,redirect, flash,request
 from app import app
+from flask import render_template,url_for,redirect, flash,request
+
 from app.tables import Raions,Group_Home,Summary
 
 from datetime import datetime
-from config import basedir
+
 import os
 
 

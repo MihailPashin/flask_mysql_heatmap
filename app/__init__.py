@@ -14,9 +14,8 @@ app.config.from_object(Config)
 
 def init_db():
 
-    Base.metadata.create_all(bind=engine,checkfirst=True)
+    db=Base.metadata.create_all(bind=engine,checkfirst=True)
     print("Initialized the db")
-    db = SQLAlchemy(app)
 
     with engine.connect() as conn:
         result = conn.execute(text('select True from summary limit 1'))
@@ -25,13 +24,14 @@ def init_db():
     if result:
         print('Its alright')
     else:
-        
-        migrate = Migrate(app, db)
+   
         print('Adding_Data')    
         load_database(db,app)
+        print('Data has been added')
 
 
 init_db()
+
 from app import routes
 
 
