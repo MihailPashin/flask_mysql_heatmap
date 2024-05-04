@@ -48,7 +48,10 @@ def load_database(engine, app):
                 print(f'summary {k},{v}')
                 stmt = metadata.tables['summary'].insert().values(raions_id=v['object_id'],
                                                                   group_id=v['group_id'],
-                                                                  likeness=math.ceil(v['x_scaled']))
+                                                                  likeness=math.ceil(v['x_scaled']),
+                                                                  count_negative_reviews=v['count_negative_reviews'],
+                                                            	count_neutral_reviews=v['count_neutral_reviews'],
+                                                                    	count_positive_reviews=v['count_positive_reviews'])
                 session.execute(stmt)
                 session.commit()
 

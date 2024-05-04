@@ -29,6 +29,22 @@ class Summary(Base):
     raions_id = Column(Integer, ForeignKey('objects_estate.id'))
     group_id = Column(Integer, ForeignKey('groups_home.id'))
     likeness = Column(Integer)
+    count_negative_reviews = Column(Integer)
+    count_neutral_reviews = Column(Integer)
+    count_positive_reviews = Column(Integer)
     raions = relationship("Raions", backref=backref('summary', cascade="all, delete-orphan"))
     group = relationship("Group_Home", backref=backref('summary', cascade="all, delete-orphan"))
-
+    
+    def to_dict(self):
+            raions_obj = self.raions
+            return {
+                'id': self.id,
+                'raions_id': self.raions_id,
+                'group_id': self.group_id,
+                'likeness': self.likeness,
+                'coord_x': raions_obj.coord_x,
+                'coord_y': raions_obj.coord_y
+            }
+    def __repr__(self):
+        return f"<Summary(name='{self.id}', Raions='{self.raions_id}', Groups='{self.group_id}')>"
+        #return {self.id, self.raions_id, self.group_id}
